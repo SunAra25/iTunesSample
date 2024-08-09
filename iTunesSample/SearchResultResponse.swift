@@ -8,51 +8,49 @@
 import Foundation
 
 struct SearchResultResponse: Codable {
+    let resultCount: Int
     let results: [SearchResult]
 }
 
 struct SearchResult: Codable {
-    let wrapperType: WrapperType
-    let kind: String
+    let screenshotUrls: [String]
+    let artworkUrl512: String
+    let artistViewURL: String
+    let currentVersionReleaseDate: String
+    let description: String
     let artistName: String
-    let collectionName: String?
-    let trackName: String
-    let collectionCensoredName: String?
-    let trackCensoredName: String
-    let collectionArtistViewURL, collectionViewURL: String?
-    let trackViewURL: String
-    let previewURL: String?
-    let artworkUrl100: String
-    let collectionPrice, trackPrice, trackRentalPrice, collectionHDPrice: Int?
-    let trackHDPrice, trackHDRentalPrice: Int?
-    let releaseDate: String
+    let genres: [String]
+    let price: Int
+    let releaseDate: Date
+    let releaseNotes: String
     let primaryGenreName: String
-    let contentAdvisoryRating: String?
-    let longDescription, shortDescription: String?
-    let feedURL: String?
-    let genres: [String]?
-    let artistViewURL: String?
+    let sellerName: String
+    let trackName: String
+    let currency: String
+    let averageUserRatingForCurrentVersion, averageUserRating: Double
+    let trackCensoredName: String
+    let fileSizeBytes: String
+    let sellerURL: String?
+    let formattedPrice: String
+    let contentAdvisoryRating: String
+    let userRatingCountForCurrentVersion, userRatingCount: Int
+    let trackViewURL: String
+    let trackContentRating: String
+    let minimumOSVersion, version: String
 
     enum CodingKeys: String, CodingKey {
-        case wrapperType, kind
-        case artistName, collectionName, trackName, collectionCensoredName, trackCensoredName
-        case collectionArtistViewURL = "collectionArtistViewUrl"
-        case collectionViewURL = "collectionViewUrl"
-        case trackViewURL = "trackViewUrl"
-        case previewURL = "previewUrl"
-        case artworkUrl100, collectionPrice, trackPrice, trackRentalPrice
-        case collectionHDPrice = "collectionHdPrice"
-        case trackHDPrice = "trackHdPrice"
-        case trackHDRentalPrice = "trackHdRentalPrice"
-        case releaseDate, primaryGenreName, contentAdvisoryRating, longDescription, shortDescription
-        case feedURL = "feedUrl"
-        case genres
+        case screenshotUrls, artworkUrl512
         case artistViewURL = "artistViewUrl"
+        case currentVersionReleaseDate, description
+        case artistName, genres, price, releaseDate
+        case releaseNotes, primaryGenreName
+        case sellerName
+        case trackName, currency, averageUserRatingForCurrentVersion, averageUserRating, trackCensoredName, fileSizeBytes
+        case sellerURL = "sellerUrl"
+        case formattedPrice, contentAdvisoryRating, userRatingCountForCurrentVersion
+        case trackViewURL = "trackViewUrl"
+        case trackContentRating
+        case minimumOSVersion = "minimumOsVersion"
+        case version, userRatingCount
     }
-}
-
-enum WrapperType: String, Codable {
-    case track
-    case collection
-    case artist
 }
