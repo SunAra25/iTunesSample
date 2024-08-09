@@ -27,6 +27,11 @@ final class SearchCollectionViewCell: UICollectionViewCell {
     }
     
     private func configure() {
+        contentView.clipsToBounds = true
+        contentView.layer.cornerRadius = 12
+        contentView.layer.borderWidth = 1
+        contentView.layer.borderColor = UIColor.systemGray.cgColor
+        
         contentView.addSubview(imageView)
         
         imageView.snp.makeConstraints { make in

@@ -38,9 +38,7 @@ class SearchViewModel {
             }
             .subscribe(with: self) { owner, value in
                 owner.contentList = value.results
-                trackList.onNext(owner.contentList.filter { $0.wrapperType == .track })
-                collectionList.onNext(owner.contentList.filter { $0.wrapperType == .collection })
-                artistList.onNext(owner.contentList.filter { $0.wrapperType == .artist })
+                
             } onError: { owner, error in
                 print(error)
             } onCompleted: { owner in
