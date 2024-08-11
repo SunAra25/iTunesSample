@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 final class ContentTableViewCell: UITableViewCell {
     static let identifier = "ContentTableViewCell"
@@ -155,5 +156,14 @@ final class ContentTableViewCell: UITableViewCell {
             make.top.equalTo(artistNameLabel.snp.bottom).offset(12)
             make.horizontalEdges.bottom.equalToSuperview().inset(16)
         }
+    }
+    
+    func configureCell(_ data: SearchResult) {
+        let logoURL = URL(string: data.artworkUrl512)
+        appLogoImageView.kf.setImage(with: logoURL)
+        appTitleLabel.text = data.trackName
+        aveRatingButton.configuration?.title = String(format: "%.1f", data.averageUserRating)
+        artistNameLabel.text = data.artistName
+        genreLabel.text = data.primaryGenreName
     }
 }

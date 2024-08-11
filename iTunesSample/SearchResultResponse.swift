@@ -21,7 +21,7 @@ struct SearchResult: Codable {
     let artistName: String
     let genres: [String]
     let price: Int
-    let releaseDate: Date
+    let releaseDate: String
     let releaseNotes: String
     let primaryGenreName: String
     let sellerName: String

@@ -9,8 +9,6 @@ import Foundation
 import RxSwift
 
 class SearchViewModel {
-    private var contentList: [SearchResult] = []
-    
     let disposeBag = DisposeBag()
     
     struct Input {
@@ -19,16 +17,12 @@ class SearchViewModel {
     }
     
     struct Output {
-        let trackList: PublishSubject<[SearchResult]>
-        let collectionList: PublishSubject<[SearchResult]>
-        let artistList: PublishSubject<[SearchResult]>
+        let appList: PublishSubject<[SearchResult]>
         let pushDetailView: PublishSubject<SearchResult>
     }
     
     func transform(input: Input) -> Output {
-        let trackList = PublishSubject<[SearchResult]>()
-        let collectionList = PublishSubject<[SearchResult]>()
-        let artistList = PublishSubject<[SearchResult]>()
+        let appList = PublishSubject<[SearchResult]>()
         let pushDetailView = PublishSubject<SearchResult>()
         
         input.searchBtnTap
@@ -37,8 +31,7 @@ class SearchViewModel {
                 self.fetchContentList(term: value)
             }
             .subscribe(with: self) { owner, value in
-                owner.contentList = value.results
-                
+                appList.onNext(value.results)
             } onError: { owner, error in
                 print(error)
             } onCompleted: { owner in
@@ -52,16 +45,14 @@ class SearchViewModel {
                 pushDetailView.onNext(value)
             }.disposed(by: disposeBag)
         
-        return Output(trackList: trackList,
-                      collectionList: collectionList,
-                      artistList: artistList,
+        return Output(appList: appList,
                       pushDetailView: pushDetailView)
     }
 }
 
 extension SearchViewModel {
     func fetchContentList(term: String) -> Observable<SearchResultResponse> {
-        let url = "https://itunes.apple.com/search?term=\(term)&country=KR"
+        let url = "https://itunes.apple.com/search?term=\(term)&country=KR&media=software"
         
         let result = Observable<SearchResultResponse>.create { observer in
             guard let url = URL(string: url) else {
