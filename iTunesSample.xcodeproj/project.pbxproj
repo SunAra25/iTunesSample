@@ -21,6 +21,7 @@
 		C0D028E72C64B70500EA1803 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D028E62C64B70500EA1803 /* SearchViewModel.swift */; };
 		C0D028E92C64B83900EA1803 /* SearchResultResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D028E82C64B83900EA1803 /* SearchResultResponse.swift */; };
 		C0D028F02C65FAEF00EA1803 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = C0D028EF2C65FAEF00EA1803 /* Kingfisher */; };
+		C0D028FB2C6A3EF400EA1803 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D028FA2C6A3EF400EA1803 /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		C0D028E42C64B52400EA1803 /* ScreenShotCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenShotCollectionViewCell.swift; sourceTree = "<group>"; };
 		C0D028E62C64B70500EA1803 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		C0D028E82C64B83900EA1803 /* SearchResultResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultResponse.swift; sourceTree = "<group>"; };
+		C0D028FA2C6A3EF400EA1803 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 				C0D028D22C649F6E00EA1803 /* Info.plist */,
 				C0D028E62C64B70500EA1803 /* SearchViewModel.swift */,
 				C0D028E82C64B83900EA1803 /* SearchResultResponse.swift */,
+				C0D028FA2C6A3EF400EA1803 /* DetailViewController.swift */,
 			);
 			path = iTunesSample;
 			sourceTree = "<group>";
@@ -168,6 +171,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0D028FB2C6A3EF400EA1803 /* DetailViewController.swift in Sources */,
 				C0D028C92C649F6C00EA1803 /* ViewController.swift in Sources */,
 				C0D028E92C64B83900EA1803 /* SearchResultResponse.swift in Sources */,
 				C0D028E72C64B70500EA1803 /* SearchViewModel.swift in Sources */,

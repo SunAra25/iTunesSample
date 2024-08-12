@@ -31,14 +31,19 @@ final class SearchViewController: UIViewController {
     func bind() {
         let searchBtnTap = searchController.searchBar.rx.searchButtonClicked
             .withLatestFrom(searchController.searchBar.rx.text.orEmpty)
-        let contentDidSelect = PublishSubject<SearchResult>()
         let input = SearchViewModel.Input(searchBtnTap: searchBtnTap.asObservable(),
-                                          contentDidSelect: contentDidSelect)
+                                          contentDidSelect: tableView.rx.modelSelected(SearchResult.self).asObservable())
         let output = viewModel.transform(input: input)
         
         output.appList
             .bind(to: tableView.rx.items(cellIdentifier: ContentTableViewCell.identifier, cellType: ContentTableViewCell.self)) { row, element, cell in
                 cell.configureCell(element)
+            }.disposed(by: disposeBag)
+        
+        output.pushDetailView
+            .bind(with: self) { owner, data in
+                let nextVC = DetailViewController()
+                owner.navigationController?.pushViewController(nextVC, animated: true)
             }.disposed(by: disposeBag)
     }
     
