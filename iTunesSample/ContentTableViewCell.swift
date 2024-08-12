@@ -8,9 +8,12 @@
 import UIKit
 import SnapKit
 import Kingfisher
+import RxSwift
+import RxCocoa
 
 final class ContentTableViewCell: UITableViewCell {
     static let identifier = "ContentTableViewCell"
+    var disposeBag = DisposeBag()
     
     private let appLogoImageView = {
         let view = UIImageView()
@@ -88,10 +91,15 @@ final class ContentTableViewCell: UITableViewCell {
         layout.minimumLineSpacing = padding
         
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        view.register(SearchCollectionViewCell.self, forCellWithReuseIdentifier: SearchCollectionViewCell.identifier)
-        view.isScrollEnabled = false
+        view.register(ScreenShotCollectionViewCell.self, forCellWithReuseIdentifier: ScreenShotCollectionViewCell.identifier)
+        view.showsHorizontalScrollIndicator = false
         return view
     }()
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        disposeBag = DisposeBag()
+    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -157,7 +165,7 @@ final class ContentTableViewCell: UITableViewCell {
         
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(artistNameLabel.snp.bottom).offset(12)
-            make.horizontalEdges.bottom.equalToSuperview().inset(16)
+            make.horizontalEdges.bottom.equalToSuperview()
         }
     }
     
@@ -168,5 +176,13 @@ final class ContentTableViewCell: UITableViewCell {
         aveRatingButton.configuration?.title = String(format: "%.1f", data.averageUserRating)
         artistNameLabel.text = data.artistName
         genreLabel.text = data.primaryGenreName
+        
+        let screenShot = BehaviorSubject<[String]>(value: data.screenshotUrls)
+        screenShot
+            .bind(to: collectionView.rx.items(cellIdentifier: ScreenShotCollectionViewCell.identifier, cellType: ScreenShotCollectionViewCell.self)) { row, element, cell in
+                cell.configureCell(URL(string: element))
+            }.disposed(by: disposeBag)
+        
+        collectionView.layoutIfNeeded()
     }
 }

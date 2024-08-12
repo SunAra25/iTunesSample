@@ -8,8 +8,8 @@
 import UIKit
 import SnapKit
 
-final class SearchCollectionViewCell: UICollectionViewCell {
-    static let identifier = "SearchCollectionViewCell"
+final class ScreenShotCollectionViewCell: UICollectionViewCell {
+    static let identifier = "ScreenShotCollectionViewCell"
     
     private let imageView = {
         let view = UIImageView()
@@ -37,5 +37,9 @@ final class SearchCollectionViewCell: UICollectionViewCell {
         imageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+    }
+    
+    func configureCell(_ data: URL?) {
+        imageView.kf.setImage(with: data)
     }
 }

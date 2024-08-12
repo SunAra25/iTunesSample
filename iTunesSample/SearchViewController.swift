@@ -14,6 +14,7 @@ final class SearchViewController: UIViewController {
     private let searchController = UISearchController()
     private let tableView = {
         let view = UITableView()
+        view.rowHeight = 340
         view.register(ContentTableViewCell.self, forCellReuseIdentifier: ContentTableViewCell.identifier)
         return view
     }()
