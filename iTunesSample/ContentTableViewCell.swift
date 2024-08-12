@@ -16,6 +16,7 @@ final class ContentTableViewCell: UITableViewCell {
         let view = UIImageView()
         view.layer.cornerRadius = 8
         view.contentMode = .scaleAspectFill
+        view.clipsToBounds = true
         return view
     }()
     private let labelView = UIView()
@@ -40,22 +41,24 @@ final class ContentTableViewCell: UITableViewCell {
     private let downloadButton = {
         let button = UIButton()
         var attr = AttributedString.init("받기")
-        attr.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        attr.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
         var config = UIButton.Configuration.filled()
         config.attributedTitle = attr
         config.baseForegroundColor = .systemBlue
         config.baseBackgroundColor = .systemGray
         button.configuration = config
+        button.layer.cornerRadius = 15
+        button.clipsToBounds = true
         return button
     }()
     private let aveRatingButton = {
         let button = UIButton()
-        var attr = AttributedString.init("")
-        attr.foregroundColor = UIColor.systemGray
-        var config = UIButton.Configuration.filled()
-        config.attributedTitle = attr
-        config.image = UIImage(systemName: "star.fill")
+        var config = UIButton.Configuration.plain()
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 13, weight: .medium)
+        let image = UIImage(systemName: "star.fill", withConfiguration: imageConfig)
+        config.image = image
         config.baseForegroundColor = .systemBlue
+        config.buttonSize = .small
         button.configuration = config
         button.isEnabled = false
         return button
@@ -118,8 +121,8 @@ final class ContentTableViewCell: UITableViewCell {
         downloadButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(16)
             make.centerY.equalTo(appLogoImageView)
-            make.width.equalTo(56)
-            make.height.equalTo(40)
+            make.width.equalTo(48)
+            make.height.equalTo(32)
         }
         
         labelView.snp.makeConstraints { make in
@@ -138,8 +141,8 @@ final class ContentTableViewCell: UITableViewCell {
         }
         
         aveRatingButton.snp.makeConstraints { make in
-            make.top.equalTo(appLogoImageView.snp.bottom)
-            make.leading.equalToSuperview()
+            make.top.equalTo(appLogoImageView.snp.bottom).offset(4)
+            make.leading.equalToSuperview().inset(8)
         }
         
         artistNameLabel.snp.makeConstraints { make in
