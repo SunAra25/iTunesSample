@@ -42,7 +42,7 @@ final class SearchViewController: UIViewController {
         
         output.pushDetailView
             .bind(with: self) { owner, data in
-                let nextVC = DetailViewController()
+                let nextVC = DetailViewController(data: data)
                 owner.navigationController?.pushViewController(nextVC, animated: true)
             }.disposed(by: disposeBag)
     }
