@@ -7,6 +7,9 @@
 
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
+import Kingfisher
 
 final class DetailViewController: UIViewController {
     private let scrollView = UIScrollView()
@@ -81,10 +84,13 @@ final class DetailViewController: UIViewController {
         return view
     }()
     private let appData: SearchResult
+    private let viewModel = DetailViewModel()
+    private let disposeBag = DisposeBag()
     
     init(data: SearchResult) {
         appData = data
         super.init(nibName: nil, bundle: nil)
+        bind()
     }
     
     required init?(coder: NSCoder) {
@@ -101,6 +107,31 @@ final class DetailViewController: UIViewController {
     
     private func setNavigation() {
         navigationItem.largeTitleDisplayMode = .never
+    }
+    
+    private func bind() {
+        let receiveData = PublishSubject<SearchResult>()
+        receiveData.onNext(appData)
+        
+        let input = DetailViewModel.Input(receiveData: receiveData)
+        let output = viewModel.transform(input: input)
+        
+        output.configureData
+            .bind(with: self) { owner, value in
+                print(value)
+                let logoURL = URL(string: value.artworkUrl512)
+                owner.appLogoImageView.kf.setImage(with: logoURL)
+                owner.appTitleLabel.text = value.trackName
+                owner.artistNameLabel.text = value.artistName
+                owner.versionLabel.text = "버전 \(value.version)"
+                owner.newContentLabel.text = value.releaseNotes
+//                let screenShot = BehaviorSubject<[String]>(value: data.screenshotUrls)
+//                screenShot
+//                    .bind(to: collectionView.rx.items(cellIdentifier: ScreenShotCollectionViewCell.identifier, cellType: ScreenShotCollectionViewCell.self)) { row, element, cell in
+//                        cell.configureCell(URL(string: element))
+//                    }.disposed(by: disposeBag)
+                
+            }.disposed(by: disposeBag)
     }
     
     private func setConstraints() {
